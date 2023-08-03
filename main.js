@@ -6,7 +6,7 @@ function gameBoard() {
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
-      board[i.push("")];
+      board[i].push(box());
     }
   }
 
@@ -14,10 +14,17 @@ function gameBoard() {
 
   const writeSymbol = (row, column, player) => {};
 
-  const printBoard = () => {};
+  const printBoard = () => {
+    console.log(board);
+    const textBoard = board.map((row) => row.map((box) => box.getSymbol()));
+    console.log(textBoard);
+  };
 
   return { getBoard, writeSymbol, printBoard };
 }
+
+const testBoard = gameBoard();
+testBoard.printBoard();
 
 function gameController() {
   const board = gameBoard();
@@ -25,11 +32,19 @@ function gameController() {
   const checkWinner = () => {};
 }
 
-function player() {}
+function player() {
+  let score = 0;
 
-function computer() {}
+  const getPlayerScore = () => score;
+}
 
-function cell() {
+function computer() {
+  let score = 0;
+
+  const getComputerScore = () => score;
+}
+
+function box() {
   let symbol = "";
 
   // Receives player symbol and sets cell as said symbol
