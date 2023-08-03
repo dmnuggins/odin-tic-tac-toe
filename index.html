@@ -4,9 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/node_modules/normalize.css/normalize.css" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Tic-Tac-Toe</title>
   </head>
   <body>
-    <h1>Tic-Tac-Toe</h1>
+    <div class="game-board">
+      <div class="box top left">O</div>
+      <div class="box top">X</div>
+      <div class="box top right">X</div>
+      <div class="box left">O</div>
+      <div class="box">O</div>
+      <div class="box right">X</div>
+      <div class="box bottom left">X</div>
+      <div class="box bottom">O</div>
+      <div class="box bottom right">O</div>
+    </div>
+    <div class="score-board">
+      <p class="player">
+        PLAYER (X)
+        <span class="score">0</span>
+      </p>
+      <p class="tie">
+        TIE
+        <span class="score">0</span>
+      </p>
+      <p class="computer">
+        COMPUTER (O)
+        <span class="score">0</span>
+      </p>
+    </div>
   </body>
 </html>
