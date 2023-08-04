@@ -1,33 +1,25 @@
-function gameBoard() {
-  const rows = 3;
-  const columns = 3;
+// need to adjust to be a factory function
+const gameBoard = (() => {
   const board = [];
 
-  for (let i = 0; i < rows; i++) {
-    board[i] = [];
-    for (let j = 0; j < columns; j++) {
-      board[i].push(box());
-    }
+  for (let i = 0; i < 9; i++) {
+    board.push(box());
   }
 
   const getBoard = () => board;
 
-  const writeSymbol = (row, column, player) => {};
+  const writeSymbol = (index, symbol) => {};
 
   const printBoard = () => {
     console.log(board);
-    const textBoard = board.map((row) => row.map((box) => box.getSymbol()));
+    const textBoard = board.map((box) => box.getSymbol());
     console.log(textBoard);
   };
 
   return { getBoard, writeSymbol, printBoard };
-}
+})();
 
-const gameBoard = (() => {
-  const board []
-})
-
-const testBoard = gameBoard();
+const testBoard = gameBoard;
 testBoard.printBoard();
 
 function gameController() {
@@ -35,20 +27,67 @@ function gameController() {
 
   const winConditions = [
     // Rows
-    [[0, 0], [0, 1], [0, 2]],
-    [[1, 0], [1, 1], [1, 2]],
-    [[2, 0], [2, 1], [2, 2]],
-  
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ],
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ],
+
     // Columns
-    [[0, 0], [1, 0], [2, 0]],
-    [[0, 1], [1, 1], [2, 1]],
-    [[0, 2], [1, 2], [2, 2]],
-  
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ],
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ],
+
     // Diagonals
-    [[0, 0], [1, 1], [2, 2]],
-    [[0, 2], [1, 1], [2, 0]],
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ],
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ],
   ];
-  const checkWinner = () => {};
+  const checkWinner = (board) => {
+    for (const condition of winConditions) {
+      const [row1, col1] = condition[0];
+      const [row2, col2] = condition[1];
+      const [row3, col3] = condition[2];
+
+      if (
+        board[row1][col1] &&
+        board[row1][col1] === board[row2][col2] &&
+        board[row1][col1] === board[row3][col3]
+      ) {
+        return board[row1][col1]; // winner found
+      }
+    }
+    return null; // no winner
+  };
 }
 
 function player() {
