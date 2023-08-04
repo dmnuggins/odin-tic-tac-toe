@@ -3,117 +3,94 @@ const gameBoard = (() => {
   const board = [];
 
   for (let i = 0; i < 9; i++) {
-    board.push(box());
+    board.push("");
   }
 
   const getBoard = () => board;
 
+  const getSymbol = (index) => {
+    return board[index];
+  };
+
+  const player = (symbol) => {
+    this.symbol = symbol;
+    let score = 0;
+
+    const getPlayerScore = () => score;
+
+    const getSymbol = () => symbol;
+
+    return { getPlayerScore, getSymbol };
+  };
+
   const writeSymbol = (index, symbol) => {};
 
   const printBoard = () => {
-    console.log(board);
-    const textBoard = board.map((box) => box.getSymbol());
-    console.log(textBoard);
+    let row = [];
+    let col = 0;
+
+    for (i = 0; i < board.length; i++) {
+      col++;
+      row.push(board[i]);
+
+      if (col % 3 === 0) {
+        console.log(row);
+        row = [];
+      }
+    }
   };
 
-  return { getBoard, writeSymbol, printBoard };
+  return { getBoard, writeSymbol, getSymbol, printBoard };
 })();
 
-const testBoard = gameBoard;
-testBoard.printBoard();
+const gameController = (() => {
+  const playerX = player("x");
+  const playerY = player("y");
 
-function gameController() {
-  const board = gameBoard();
+  const assignSymbol = (index, player) => {
+    // given player and index, assign symbol
+  };
 
   const winConditions = [
-    // Rows
-    [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-    ],
-    [
-      [1, 0],
-      [1, 1],
-      [1, 2],
-    ],
-    [
-      [2, 0],
-      [2, 1],
-      [2, 2],
-    ],
-
-    // Columns
-    [
-      [0, 0],
-      [1, 0],
-      [2, 0],
-    ],
-    [
-      [0, 1],
-      [1, 1],
-      [2, 1],
-    ],
-    [
-      [0, 2],
-      [1, 2],
-      [2, 2],
-    ],
-
-    // Diagonals
-    [
-      [0, 0],
-      [1, 1],
-      [2, 2],
-    ],
-    [
-      [0, 2],
-      [1, 1],
-      [2, 0],
-    ],
+    [0, 1, 2], // Top row
+    [3, 4, 5], // Middle row
+    [6, 7, 8], // Bottom row
+    [0, 3, 6], // Left column
+    [1, 4, 7], // Middle column
+    [2, 5, 8], // Right column
+    [0, 4, 8], // Diagonal from top-left to bottom-right
+    [2, 4, 6], // Diagonal from top-right to bottom-left
   ];
+
   const checkWinner = (board) => {
     for (const condition of winConditions) {
-      const [row1, col1] = condition[0];
-      const [row2, col2] = condition[1];
-      const [row3, col3] = condition[2];
-
-      if (
-        board[row1][col1] &&
-        board[row1][col1] === board[row2][col2] &&
-        board[row1][col1] === board[row3][col3]
-      ) {
-        return board[row1][col1]; // winner found
+      const [a, b, c] = condition;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a]; // returns winning symbol
       }
     }
     return null; // no winner
   };
-}
 
-function player() {
-  let score = 0;
+  return { assignSymbol };
+})();
 
-  const getPlayerScore = () => score;
-}
+const displayController = (() => {
+  const boardBoxes = document.querySelectorAll(".box");
+  // listener
+  boardBoxes.forEach((box) => {
+    box.addEventListener("click", () => {
+      gameController.assignSymbol();
+      updateBoard();
+    });
+  });
 
-function computer() {
-  let score = 0;
-
-  const getComputerScore = () => score;
-}
-
-function box() {
-  let symbol = "";
-
-  // Receives player symbol and sets cell as said symbol
-  const setSymbol = (player) => {
-    symbol = player;
+  const updateBoard = () => {
+    // update DOM
+    for (let i = 0; i < boardBoxes.length; i++) {
+      boardBoxes[i].textContent = gameBoard.getSymbol(i);
+    }
   };
 
-  const getSymbol = () => symbol;
-
-  return {
-    setSymbol,
-    getSymbol,
-  };
-}
+  const clearBoard = () => {};
+})();
