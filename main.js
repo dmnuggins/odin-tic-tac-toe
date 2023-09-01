@@ -1,26 +1,24 @@
+// Player factory function
+const player = (symbol) => {
+  this.symbol = symbol;
+
+  const getSymbol = () => symbol;
+
+  return { getSymbol };
+};
 // need to adjust to be a factory function
+
 const gameBoard = (() => {
   const board = [];
 
   for (let i = 0; i < 9; i++) {
-    board.push("");
+    board.push('');
   }
 
   const getBoard = () => board;
 
   const getSymbol = (index) => {
     return board[index];
-  };
-
-  const player = (symbol) => {
-    this.symbol = symbol;
-    let score = 0;
-
-    const getPlayerScore = () => score;
-
-    const getSymbol = () => symbol;
-
-    return { getPlayerScore, getSymbol };
   };
 
   const writeSymbol = (index, symbol) => {};
@@ -44,11 +42,29 @@ const gameBoard = (() => {
 })();
 
 const gameController = (() => {
-  const playerX = player("x");
-  const playerY = player("y");
+  const playerX = player('x');
+  const playerY = player('y');
 
-  const assignSymbol = (index, player) => {
+  let curPlayer = playerX.getSymbol(); // 'x'
+
+  let scoreX = 0;
+  let scoreY = 0;
+  let numTies = 0;
+
+  // assign symbol based on cell id received when clicked
+  const assignSymbol = (cell) => {
     // given player and index, assign symbol
+    if (curPlayer === 'x') {
+      // assign symbol to appropriate cell
+    }
+  };
+
+  // swutcg
+  const switchPlayers = () => {};
+
+  const updateScore = () => {};
+
+  const playRound = () => {
   };
 
   const winConditions = [
@@ -76,14 +92,24 @@ const gameController = (() => {
 })();
 
 const displayController = (() => {
-  const boardBoxes = document.querySelectorAll(".box");
-  // listener
+  const boardBoxes = document.querySelectorAll('.box');
+
+  // BEGIN_EVENT LISTENERS
+
   boardBoxes.forEach((box) => {
-    box.addEventListener("click", () => {
+    box.addEventListener('click', () => {
+      const boxID = box.id
+
+      console.log(box.id);
+      console.log(`Clicked box ID: ${boxID}`);
+
+      // assign symbol based on ID
       gameController.assignSymbol();
       updateBoard();
+
     });
   });
+  // END_EVENT LISTENERS
 
   const updateBoard = () => {
     // update DOM
@@ -91,6 +117,8 @@ const displayController = (() => {
       boardBoxes[i].textContent = gameBoard.getSymbol(i);
     }
   };
+
+  const updateScores = () => {};
 
   const clearBoard = () => {};
 })();
